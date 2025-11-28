@@ -56,7 +56,7 @@
         .form-group {
             margin-bottom: 15px;
             display: flex;
-            align-items: center;
+            align-items: center; /* 垂直居中對齊 */
             justify-content: space-between;
         }
         .form-group label {
@@ -92,12 +92,20 @@
             border-radius: 4px;
             margin-bottom: 20px;
             text-align: center;
+            display: flex; /* 使用 flex 佈局 */
+            flex-wrap: wrap; /* 允許換行 */
+            justify-content: center; /* 居中對齊 */
+            gap: 15px; /* 項目間距 */
         }
         .contract-selection label {
-            margin: 0 15px;
             font-weight: bold;
             cursor: pointer;
-            white-space: nowrap;
+            white-space: nowrap; /* 不換行 */
+            display: inline-flex; /* 讓 label 和 input 並排，方便控制 */
+            align-items: center;
+        }
+        .contract-selection label input[type="checkbox"] {
+            margin-right: 5px;
         }
         /* Strategy Switcher */
         .strategy-switch {
@@ -241,11 +249,40 @@
                 flex: 1 1 100%; /* 每個輸入區塊佔滿寬度 */
                 padding: 15px;
             }
-            .form-group label, .form-group input[type="number"] {
-                font-size: 13px; /* 縮小字體 */
-                padding: 6px; /* 縮小內距 */
+
+            /* 需求1: label 在左上，input 欄位在右下，input 只有底線 */
+            .form-group {
+                flex-direction: column; /* 垂直堆疊 */
+                align-items: flex-start; /* 左上對齊 */
             }
-            .strategy-switch label, .contract-selection label {
+            .form-group label {
+                width: 100%; /* 標籤佔滿一行 */
+                margin-bottom: 5px; /* 與 input 之間的間距 */
+                margin-right: 0; /* 移除右邊距 */
+                font-size: 13px; /* 縮小字體 */
+            }
+            .form-group input[type="number"] {
+                width: 100%; /* 輸入框佔滿一行 */
+                border: none; /* 移除所有邊框 */
+                border-bottom: 1px solid #ccc; /* 只留底部邊框 */
+                background-color: transparent; /* 背景透明 */
+                padding: 6px 0; /* 調整內距，靠底部邊框 */
+                text-align: left; /* 文字靠左顯示 */
+                font-size: 14px; /* 輸入框字體大小 */
+            }
+            /* End 需求1 */
+
+            /* 需求2: 合約選擇文字大小與排版 */
+            .contract-selection {
+                gap: 10px; /* 縮小項目間距 */
+            }
+            .contract-selection label {
+                font-size: 13px; /* 縮小字體 */
+                margin: 0; /* 移除多餘間距 */
+            }
+            /* End 需求2 */
+
+            .strategy-switch label {
                 font-size: 13px;
                 margin: 0 8px; /* 縮小間距 */
             }
@@ -253,22 +290,30 @@
                 font-size: 0.8em;
             }
 
+            /* 需求3: 結果報告在mobile是兩欄一個row */
             .summary-box {
-                flex-direction: column; /* 摘要報告垂直堆疊 */
-                align-items: center;
+                flex-direction: row; /* 改回水平排佈 */
+                flex-wrap: wrap; /* 允許換行 */
+                justify-content: space-between; /* 兩端對齊，項目間有彈性空間 */
+                gap: 15px; /* 項目間距 */
             }
             .summary-item {
-                width: 100%; /* 每個項目佔滿寬度 */
-                margin-bottom: 10px;
-                border-bottom: 1px solid #c3e6cb; /* 加分隔線 */
-                padding-bottom: 10px;
+                flex: 0 0 calc(50% - 10px); /* 兩欄佈局，考慮 gap 空間 */
+                /* 移除之前的 border-bottom 等垂直堆疊樣式 */
+                border-bottom: none; 
+                padding-bottom: 0;
+                font-size: 0.9em; /* 縮小字體 */
             }
-            .summary-item:last-child {
-                border-bottom: none;
+            .summary-item:nth-child(odd) { /* 確保每行第一個元素靠左 */
+                text-align: left;
+            }
+            .summary-item:nth-child(even) { /* 確保每行第二個元素靠右 */
+                text-align: right;
             }
             .summary-item span {
-                font-size: 1.2em; /* 縮小字體 */
+                font-size: 1.1em; /* 縮小字體 */
             }
+            /* End 需求3 */
 
             table {
                 font-size: 12px; /* 表格字體更小 */
@@ -278,25 +323,32 @@
                 padding: 8px 5px; /* 表格內距縮小 */
             }
         }
-        /* For very small screens to ensure checkboxes fit */
+        /* For very small screens to ensure strategy radio buttons fit */
         @media (max-width: 480px) {
-            .contract-selection label, .strategy-switch label {
+            .strategy-switch label {
                 display: block; /* 每個選項獨立一行 */
                 margin-bottom: 5px;
+            }
+            .contract-selection {
+                /*flex-direction: row;  超小螢幕時合約選擇也垂直堆疊 */
+                gap: 5px;
+            }
+            .contract-selection label {
+                justify-content: flex-start; /* 左對齊 */
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>台指期 20日複利試算 (自選合約，自動最佳化)</h1>
+        <h1>台指期獲利試算</h1>
 
         <div class="input-section">
             <div class="input-block">
                 <h3>1. 資金與成本設定</h3>
                 <div class="form-group">
                     <label for="initialCapital">初始本金 (NT$):</label>
-                    <input type="number" id="initialCapital" value="500000" min="0" step="1000">
+                    <input type="number" id="initialCapital" value="56000" min="0" step="1000">
                 </div>
                 <div class="form-group" style="background: #fff3cd; padding: 5px;">
                     <label for="assumedIndex">假設指數點位 (計算期交稅用):</label>
@@ -356,34 +408,34 @@
                 <h3>3. 獲利目標策略 (二選一)</h3>
                 <div class="strategy-switch">
                     <label>
-                        <input type="radio" name="strategyMode" value="A" checked onchange="toggleMode()"> 模式 A: 設定「每盤總目標點數」
+                        <input type="radio" name="strategyMode" value="A" onchange="toggleMode()"> 模式 A: 設定「每盤總目標點數」
                     </label>
                     <label>
-                        <input type="radio" name="strategyMode" value="B" onchange="toggleMode()"> 模式 B: 設定「單次獲利 x 次數」
+                        <input type="radio" name="strategyMode" value="B" checked onchange="toggleMode()"> 模式 B: 設定「單次獲利 x 次數」
                     </label>
                 </div>
 
-                <div id="modeAInputs" class="mode-inputs active">
+                <div id="modeAInputs" class="mode-inputs">
                     <p class="note">說明：直接設定早盤/夜盤預計達到的總淨點數。系統預設每盤僅進出「1趟」來計算成本。</p>
                     <div class="form-group">
                         <label for="modeA_morningPoints">早盤目標總點數:</label>
-                        <input type="number" id="modeA_morningPoints" value="20" min="0">
+                        <input type="number" id="modeA_morningPoints" value="200" min="0">
                     </div>
                     <div class="form-group">
                         <label for="modeA_nightPoints">夜盤目標總點數:</label>
-                        <input type="number" id="modeA_nightPoints" value="10" min="0">
+                        <input type="number" id="modeA_nightPoints" value="150" min="0">
                     </div>
                 </div>
 
-                <div id="modeBInputs" class="mode-inputs">
+                <div id="modeBInputs" class="mode-inputs active">
                     <p class="note">說明：設定單筆交易獲利點數，以及早/夜盤各交易幾趟。成本會隨交易次數增加。</p>
                     <div class="form-group">
                         <label for="modeB_pointsPerTrade">單次交易目標點數:</label>
-                        <input type="number" id="modeB_pointsPerTrade" value="5" min="0">
+                        <input type="number" id="modeB_pointsPerTrade" value="70" min="0">
                     </div>
                     <div class="form-group">
                         <label for="modeB_morningTrades">早盤交易次數 (趟):</label>
-                        <input type="number" id="modeB_morningTrades" value="4" min="0">
+                        <input type="number" id="modeB_morningTrades" value="3" min="0">
                     </div>
                     <div class="form-group">
                         <label for="modeB_nightTrades">夜盤交易次數 (趟):</label>
@@ -592,7 +644,7 @@
                     }
 
                     // 如果所有選中的合約計算後都導致虧損，則視為放棄交易，淨利為0
-                    if (finalNetProfit <= 0) {
+                    if (finalNetProfit <= 0 && contractsToEvaluate.some(c => Math.floor(startCap / c.margin) > 0)) {
                         bestContractName = '放棄交易(虧損)';
                         finalContracts = 0;
                         finalTax = 0;
