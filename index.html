@@ -41,7 +41,7 @@
             border-bottom: 2px solid var(--border-color);
         }
         .input-block {
-            flex: 1 1 400px;
+            flex: 1 1 400px; /* 基礎寬度，允許成長 */
             border: 1px solid var(--border-color);
             padding: 20px;
             border-radius: 6px;
@@ -60,16 +60,19 @@
             justify-content: space-between;
         }
         .form-group label {
-            flex: 2;
+            flex: 2; /* 標籤佔用更多空間 */
             font-weight: 500;
+            white-space: nowrap; /* 防止標籤換行 */
+            margin-right: 10px;
         }
         .form-group input[type="number"] {
-            flex: 1;
+            flex: 1; /* 輸入框佔用剩餘空間 */
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
             text-align: right;
             font-size: 14px;
+            min-width: 80px; /* 最小寬度 */
         }
         .sub-group {
             background: #f0f4f8;
@@ -94,6 +97,7 @@
             margin: 0 15px;
             font-weight: bold;
             cursor: pointer;
+            white-space: nowrap;
         }
         /* Strategy Switcher */
         .strategy-switch {
@@ -107,6 +111,7 @@
             margin: 0 15px;
             cursor: pointer;
             font-weight: bold;
+            white-space: nowrap;
         }
         .mode-inputs {
             display: none; /* Hidden by default */
@@ -150,6 +155,13 @@
             justify-content: space-around;
             font-size: 1.1em;
             border: 1px solid #c3e6cb;
+            flex-wrap: wrap; /* 允許換行 */
+            gap: 10px; /* 項目間距 */
+        }
+        .summary-item {
+            flex: 1 1 auto; /* 允許項目自適應寬度 */
+            min-width: 150px; /* 每個項目最小寬度 */
+            text-align: center;
         }
         .summary-item span {
             display: block;
@@ -158,10 +170,12 @@
         }
         /* Table Styles */
         .table-responsive {
-            overflow-x: auto;
+            overflow-x: auto; /* 允許表格水平滾動 */
+            -webkit-overflow-scrolling: touch; /* 改善 iOS 上的滾動體驗 */
         }
         table {
-            width: 100%;
+            width: 100%; /* 在大螢幕上盡量撐開 */
+            min-width: 800px; /* 在小螢幕上確保有最小寬度，觸發滾動 */
             border-collapse: collapse;
             margin-top: 20px;
             font-size: 14px;
@@ -175,7 +189,7 @@
             background-color: var(--primary-color);
             color: white;
             font-weight: 500;
-            white-space: nowrap;
+            white-space: nowrap; /* 標題不換行 */
         }
         tr:nth-child(even) {
             background-color: #f8f9fa;
@@ -204,6 +218,73 @@
             color: #666;
             margin-top: 10px;
         }
+
+        /* RWD Styles for smaller screens */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 1.8em;
+            }
+            h2 {
+                font-size: 1.4em;
+            }
+            .input-section {
+                flex-direction: column; /* 輸入區塊垂直堆疊 */
+                gap: 15px;
+            }
+            .input-block {
+                flex: 1 1 100%; /* 每個輸入區塊佔滿寬度 */
+                padding: 15px;
+            }
+            .form-group label, .form-group input[type="number"] {
+                font-size: 13px; /* 縮小字體 */
+                padding: 6px; /* 縮小內距 */
+            }
+            .strategy-switch label, .contract-selection label {
+                font-size: 13px;
+                margin: 0 8px; /* 縮小間距 */
+            }
+            .mode-inputs .note {
+                font-size: 0.8em;
+            }
+
+            .summary-box {
+                flex-direction: column; /* 摘要報告垂直堆疊 */
+                align-items: center;
+            }
+            .summary-item {
+                width: 100%; /* 每個項目佔滿寬度 */
+                margin-bottom: 10px;
+                border-bottom: 1px solid #c3e6cb; /* 加分隔線 */
+                padding-bottom: 10px;
+            }
+            .summary-item:last-child {
+                border-bottom: none;
+            }
+            .summary-item span {
+                font-size: 1.2em; /* 縮小字體 */
+            }
+
+            table {
+                font-size: 12px; /* 表格字體更小 */
+                min-width: unset; /* 取消最小寬度，讓 table-responsive 負責滾動 */
+            }
+            th, td {
+                padding: 8px 5px; /* 表格內距縮小 */
+            }
+        }
+        /* For very small screens to ensure checkboxes fit */
+        @media (max-width: 480px) {
+            .contract-selection label, .strategy-switch label {
+                display: block; /* 每個選項獨立一行 */
+                margin-bottom: 5px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -215,7 +296,7 @@
                 <h3>1. 資金與成本設定</h3>
                 <div class="form-group">
                     <label for="initialCapital">初始本金 (NT$):</label>
-                    <input type="number" id="initialCapital" value="56000" min="0" step="1000">
+                    <input type="number" id="initialCapital" value="500000" min="0" step="1000">
                 </div>
                 <div class="form-group" style="background: #fff3cd; padding: 5px;">
                     <label for="assumedIndex">假設指數點位 (計算期交稅用):</label>
@@ -275,14 +356,14 @@
                 <h3>3. 獲利目標策略 (二選一)</h3>
                 <div class="strategy-switch">
                     <label>
-                        <input type="radio" name="strategyMode" value="A" onchange="toggleMode()"> 模式 A: 設定「每盤總目標點數」
+                        <input type="radio" name="strategyMode" value="A" checked onchange="toggleMode()"> 模式 A: 設定「每盤總目標點數」
                     </label>
                     <label>
-                        <input type="radio" name="strategyMode" value="B" checked onchange="toggleMode()"> 模式 B: 設定「單次獲利 x 次數」
+                        <input type="radio" name="strategyMode" value="B" onchange="toggleMode()"> 模式 B: 設定「單次獲利 x 次數」
                     </label>
                 </div>
 
-                <div id="modeAInputs" class="mode-inputs">
+                <div id="modeAInputs" class="mode-inputs active">
                     <p class="note">說明：直接設定早盤/夜盤預計達到的總淨點數。系統預設每盤僅進出「1趟」來計算成本。</p>
                     <div class="form-group">
                         <label for="modeA_morningPoints">早盤目標總點數:</label>
@@ -294,15 +375,15 @@
                     </div>
                 </div>
 
-                <div id="modeBInputs" class="mode-inputs active">
+                <div id="modeBInputs" class="mode-inputs">
                     <p class="note">說明：設定單筆交易獲利點數，以及早/夜盤各交易幾趟。成本會隨交易次數增加。</p>
                     <div class="form-group">
                         <label for="modeB_pointsPerTrade">單次交易目標點數:</label>
-                        <input type="number" id="modeB_pointsPerTrade" value="70" min="0">
+                        <input type="number" id="modeB_pointsPerTrade" value="5" min="0">
                     </div>
                     <div class="form-group">
                         <label for="modeB_morningTrades">早盤交易次數 (趟):</label>
-                        <input type="number" id="modeB_morningTrades" value="3" min="0">
+                        <input type="number" id="modeB_morningTrades" value="4" min="0">
                     </div>
                     <div class="form-group">
                         <label for="modeB_nightTrades">夜盤交易次數 (趟):</label>
@@ -484,38 +565,35 @@
                 if (miniContract) contractsToEvaluate.push(miniContract);
                 if (microContract) contractsToEvaluate.push(microContract);
 
-                for (const contract of contractsToEvaluate) {
-                    const currentContracts = Math.floor(startCap / contract.margin);
-                    if (currentContracts > 0) {
-                        const grossProfit = currentContracts * targetPoints * contract.pointValue;
-                        const totalComm = currentContracts * contract.comm * tradesCount;
-                        const singleSideTax = calculateSingleSideTax(index, contract.pointValue);
-                        const totalTax = singleSideTax * 2 * currentContracts * tradesCount;
-                        const netProfit = grossProfit - totalComm - totalTax;
+                // 檢查是否有任何合約可以下單
+                const canTradeAnyContract = contractsToEvaluate.some(c => Math.floor(startCap / c.margin) > 0);
 
-                        if (netProfit > finalNetProfit) { // 選擇淨利更高的
-                            finalNetProfit = netProfit;
-                            bestContractName = contract.name;
-                            finalContracts = currentContracts;
-                            finalTax = totalTax;
-                            finalComm = totalComm;
+                if (!canTradeAnyContract) {
+                    bestContractName = '資金不足';
+                    finalNetProfit = 0;
+                } else {
+                    for (const contract of contractsToEvaluate) {
+                        const currentContracts = Math.floor(startCap / contract.margin);
+                        if (currentContracts > 0) { // 只有能下單的合約才進行評估
+                            const grossProfit = currentContracts * targetPoints * contract.pointValue;
+                            const totalComm = currentContracts * contract.comm * tradesCount;
+                            const singleSideTax = calculateSingleSideTax(index, contract.pointValue);
+                            const totalTax = singleSideTax * 2 * currentContracts * tradesCount;
+                            const netProfit = grossProfit - totalComm - totalTax;
+
+                            if (netProfit > finalNetProfit) { // 選擇淨利更高的
+                                finalNetProfit = netProfit;
+                                bestContractName = contract.name;
+                                finalContracts = currentContracts;
+                                finalTax = totalTax;
+                                finalComm = totalComm;
+                            }
                         }
                     }
-                }
 
-                // 如果所有選中的合約都無法下單 (資金不足)，或所有選中的合約都虧損 (選擇不交易)
-                if (bestContractName === '資金不足' || finalNetProfit <= 0) {
-                    if (bestContractName === '資金不足') { // 確實沒錢下任何選中的合約
-                        finalNetProfit = 0; // 確保淨利不為負
-                    } else if (finalNetProfit <= 0 && contractsToEvaluate.some(c => Math.floor(startCap / c.margin) > 0)) { 
-                        // 有錢下某些合約但交易會虧，也設為不交易
+                    // 如果所有選中的合約計算後都導致虧損，則視為放棄交易，淨利為0
+                    if (finalNetProfit <= 0) {
                         bestContractName = '放棄交易(虧損)';
-                        finalContracts = 0;
-                        finalTax = 0;
-                        finalComm = 0;
-                        finalNetProfit = 0;
-                    } else { // 根本沒有任何合約可下單 (初始資金太少)
-                        bestContractName = '資金不足';
                         finalContracts = 0;
                         finalTax = 0;
                         finalComm = 0;
