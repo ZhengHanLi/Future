@@ -12,6 +12,8 @@
             --success-color: #28a745;
             --warning-color: #ffc107;
             --danger-color: #dc3545;
+            --highlight-bg: #fff8e1; /* Highlight 背景色 */
+            --highlight-border: #ffc107;
         }
         body {
             font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -56,17 +58,16 @@
             transition: transform 0.3s ease-in-out;
         }
         .outer-toggle-header.collapsed .toggle-icon {
-            transform: rotate(-90deg); /* 箭頭朝下表示可展開 */
+            transform: rotate(-90deg);
         }
         .outer-toggle-header.expanded .toggle-icon {
-            transform: rotate(0deg); /* 箭頭朝上表示可收合 */
+            transform: rotate(0deg);
         }
         .outer-toggle-content {
             overflow: hidden;
-            max-height: 1000px; /* 足夠大的預設值 */
+            max-height: 2000px;
             transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
             opacity: 1;
-            /* 修正 Mobile 佈局問題：預設隱藏時直接 display: none */
             display: flex; 
             flex-wrap: wrap;
             gap: 25px;
@@ -80,22 +81,21 @@
             padding-bottom: 0;
             margin-bottom: 0;
             border-bottom: none;
-            display: none; /* 讓其完全不佔空間 */
+            display: none;
         }
-        /* End Outer Toggle Section */
 
         /* Inner Toggle for each input-block */
         .input-block {
-            flex: 1 1 400px; /* 基礎寬度，允許成長 */
+            flex: 1 1 400px;
             border: 1px solid var(--border-color);
-            padding: 0; /* 移除外層 padding，讓 h3 和內容區塊控制 */
+            padding: 0;
             border-radius: 6px;
             background-color: #fafafa;
         }
         .input-block h3 {
-            margin: 0; /* 移除預設 margin */
+            margin: 0;
             border-bottom: 1px solid #ddd;
-            padding: 15px 20px; /* 作為內層 toggle header 的 padding */
+            padding: 15px 20px;
             color: #555;
             background-color: #e9ecef;
             cursor: pointer;
@@ -110,7 +110,7 @@
             background-color: #d8e0e7;
         }
         .input-block h3 .toggle-icon {
-            font-size: 1.2em; /* 內層 toggle icon 稍小 */
+            font-size: 1.2em;
             color: #666;
         }
         .input-block h3.collapsed .toggle-icon {
@@ -120,9 +120,9 @@
             transform: rotate(0deg);
         }
         .input-content {
-            padding: 20px; /* 內容區塊的 padding */
+            padding: 20px;
             overflow: hidden;
-            max-height: 500px; /* 內容區塊的預設最大高度 */
+            max-height: 800px;
             transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
             opacity: 1;
         }
@@ -132,29 +132,29 @@
             padding-top: 0;
             padding-bottom: 0;
         }
-        /* End Inner Toggle */
 
         .form-group {
             margin-bottom: 15px;
             display: flex;
-            align-items: center; /* 垂直居中對齊 */
+            align-items: center;
             justify-content: space-between;
         }
         .form-group label {
-            flex: 2; /* 標籤佔用更多空間 */
+            flex: 2;
             font-weight: 500;
-            white-space: nowrap; /* 防止標籤換行 */
+            white-space: nowrap;
             margin-right: 10px;
         }
         .form-group input[type="number"],
-        .form-group input[type="date"] {
-            flex: 1; /* 輸入框佔用剩餘空間 */
+        .form-group input[type="date"],
+        .form-group input[type="text"] {
+            flex: 1;
             padding: 8px;
             border: 1px solid #ccc;
             border-radius: 4px;
             text-align: right;
             font-size: 14px;
-            min-width: 80px; /* 最小寬度 */
+            min-width: 80px;
         }
         .sub-group {
             background: #f0f4f8;
@@ -174,16 +174,16 @@
             border-radius: 4px;
             margin-bottom: 20px;
             text-align: center;
-            display: flex; /* 使用 flex 佈局 */
-            flex-wrap: wrap; /* 允許換行 */
-            justify-content: center; /* 居中對齊 */
-            gap: 15px; /* 項目間距 */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
         }
         .contract-selection label {
             font-weight: bold;
             cursor: pointer;
-            white-space: nowrap; /* 不換行 */
-            display: inline-flex; /* 讓 label 和 input 並排，方便控制 */
+            white-space: nowrap;
+            display: inline-flex;
             align-items: center;
         }
         .contract-selection label input[type="checkbox"] {
@@ -204,7 +204,7 @@
             white-space: nowrap;
         }
         .mode-inputs {
-            display: none; /* Hidden by default */
+            display: none;
             padding: 15px;
             background: #fff;
             border: 1px solid var(--primary-color);
@@ -212,20 +212,6 @@
         }
         .mode-inputs.active {
             display: block;
-        }
-        /* Simulation Mode Switch */
-        .simulation-mode-switch {
-            text-align: center;
-            margin-bottom: 20px;
-            background: #e9ecef;
-            padding: 10px;
-            border-radius: 4px;
-        }
-        .simulation-mode-switch label {
-            margin: 0 10px;
-            font-weight: bold;
-            cursor: pointer;
-            white-space: nowrap;
         }
 
         /* Button */
@@ -246,42 +232,49 @@
         button#calculateBtn:hover {
             background-color: #218838;
         }
+
         /* Output Section */
         #resultSection {
             display: none;
         }
+        
         .summary-box {
             background: #d4edda;
             color: #155724;
             padding: 15px;
             border-radius: 6px;
             margin-bottom: 20px;
-            display: flex;
-            justify-content: space-around;
-            font-size: 1.1em;
             border: 1px solid #c3e6cb;
-            flex-wrap: wrap; /* 允許換行 */
-            gap: 10px; /* 項目間距 */
+            
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 兩欄等寬 */
+            grid-template-rows: auto auto;  /* 兩列自動高度 */
+            gap: 15px; /* 行列間距 */
         }
         .summary-item {
-            flex: 1 1 auto; /* 允許項目自適應寬度 */
-            min-width: 150px; /* 每個項目最小寬度 */
             text-align: center;
-            padding: 5px; /* 為了兩欄顯示時有間距 */
         }
-        .summary-item span {
+        .summary-item .label {
+            font-size: 0.9em;
+            margin-bottom: 5px;
             display: block;
-            font-size: 1.5em;
+            color: #155724;
+            opacity: 0.9;
+        }
+        .summary-item .value {
+            display: block;
+            font-size: 1.4em;
             font-weight: bold;
         }
+
         /* Table Styles */
         .table-responsive {
-            overflow-x: auto; /* 允許表格水平滾動 */
-            -webkit-overflow-scrolling: touch; /* 改善 iOS 上的滾動體驗 */
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
         table {
-            width: 100%; /* 在大螢幕上盡量撐開 */
-            min-width: 900px; /* 調整最小寬度以容納更多欄位 */
+            width: 100%;
+            min-width: 900px;
             border-collapse: collapse;
             margin-top: 20px;
             font-size: 14px;
@@ -295,14 +288,34 @@
             background-color: var(--primary-color);
             color: white;
             font-weight: 500;
-            white-space: nowrap; /* 標題不換行 */
+            white-space: nowrap;
         }
         tr:nth-child(even) {
             background-color: #f8f9fa;
         }
         tr.night-session {
-            background-color: #eef2f5;
+            /* 保持乾淨背景以便 Highlight 顯示 */
         }
+        
+        /* Highlight 當前時段 */
+        tr.highlight-row {
+            background-color: var(--highlight-bg) !important;
+            border: 2px solid var(--highlight-border);
+            position: relative;
+            z-index: 1;
+        }
+        tr.highlight-row td {
+            border-top: 2px solid var(--highlight-border);
+            border-bottom: 2px solid var(--highlight-border);
+            font-weight: bold;
+        }
+        tr.highlight-row td:first-child {
+            border-left: 2px solid var(--highlight-border);
+        }
+        tr.highlight-row td:last-child {
+            border-right: 2px solid var(--highlight-border);
+        }
+
         .profit-positive {
             color: var(--success-color);
             font-weight: bold;
@@ -325,125 +338,61 @@
             margin-top: 10px;
         }
 
-        /* RWD Styles for smaller screens */
+        /* RWD Styles */
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            .container {
-                padding: 15px;
-            }
-            h1 {
-                font-size: 1.6em;
-            }
-            h2 {
-                font-size: 1.3em;
-            }
-            .outer-toggle-header {
-                font-size: 1.1em;
-                padding: 12px 15px;
-            }
-            .toggle-icon {
-                font-size: 1.3em;
-            }
-
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            h1 { font-size: 1.6em; }
+            
             .outer-toggle-content {
-                flex-direction: column; /* 輸入區塊垂直堆疊 */
+                flex-direction: column;
                 gap: 15px;
             }
-            .input-block {
-                flex: 1 1 100%; /* 每個輸入區塊佔滿寬度 */
-                /* 內層 padding 由 .input-content 控制 */
-            }
-            .input-block h3 {
-                padding: 12px 15px;
-                font-size: 1em;
-            }
+            .input-block { flex: 1 1 100%; }
 
-            /* 需求1: label 在左上，input 欄位在右下，input 只有底線 */
             .form-group {
-                flex-direction: column; /* 垂直堆疊 */
-                align-items: flex-start; /* 左上對齊 */
+                flex-direction: column;
+                align-items: flex-start;
             }
             .form-group label {
-                width: 100%; /* 標籤佔滿一行 */
-                margin-bottom: 5px; /* 與 input 之間的間距 */
-                margin-right: 0; /* 移除右邊距 */
-                font-size: 13px; /* 縮小字體 */
-            }
-            .form-group input[type="number"],
-            .form-group input[type="date"] {
-                width: 100%; /* 輸入框佔滿一行 */
-                border: none; /* 移除所有邊框 */
-                border-bottom: 1px solid #ccc; /* 只留底部邊框 */
-                background-color: transparent; /* 背景透明 */
-                padding: 6px 0; /* 調整內距，靠底部邊框 */
-                text-align: left; /* 文字靠左顯示 */
-                font-size: 14px; /* 輸入框字體大小 */
-            }
-            /* End 需求1 */
-
-            /* 需求2: 合約選擇文字大小與排版 */
-            .contract-selection {
-                gap: 10px; /* 縮小項目間距 */
-            }
-            .contract-selection label {
-                font-size: 13px; /* 縮小字體 */
-                margin: 0; /* 移除多餘間距 */
-            }
-            /* End 需求2 */
-
-            .strategy-switch label, .simulation-mode-switch label {
+                width: 100%;
+                margin-bottom: 5px;
+                margin-right: 0;
                 font-size: 13px;
-                margin: 0 8px; /* 縮小間距 */
             }
-            .mode-inputs .note {
-                font-size: 0.8em;
+            .form-group input {
+                width: 100%;
+                border: none;
+                border-bottom: 1px solid #ccc;
+                background-color: transparent;
+                padding: 6px 0;
+                text-align: left;
+                font-size: 14px;
             }
 
-            /* 需求3: 結果報告在mobile是兩欄一個row */
-            .summary-box {
-                flex-direction: row; /* 改回水平排佈 */
-                flex-wrap: wrap; /* 允許換行 */
-                justify-content: space-between; /* 兩端對齊，項目間有彈性空間 */
-                gap: 10px; /* 項目間距 */
-            }
-            .summary-item {
-                flex: 0 0 calc(50% - 10px); /* 兩欄佈局，考慮 gap 空間 */
-                padding: 5px;
-                font-size: 0.9em; /* 縮小字體 */
-                text-align: center; /* 讓內容居中，視覺上更平衡 */
-            }
-            /* 移除之前針對單數偶數的對齊，讓其統一居中 */
-            .summary-item:nth-child(odd), .summary-item:nth-child(even) { 
-                text-align: center;
-            }
-            .summary-item span {
-                font-size: 1.1em; /* 縮小字體 */
-            }
-            /* End 需求3 */
-
+            .summary-item .value { font-size: 1.2em; }
+            
             table {
-                font-size: 11px; /* 表格字體更小 */
-                min-width: unset; /* 取消最小寬度，讓 table-responsive 負責滾動 */
+                font-size: 11px;
+                min-width: unset; 
             }
             th, td {
-                padding: 6px 4px; /* 表格內距縮小 */
-                white-space: nowrap; /* 確保內容不換行，讓滾動有效 */
+                padding: 6px 4px;
+                white-space: nowrap;
             }
         }
-        /* For very small screens to ensure strategy radio buttons fit */
+
         @media (max-width: 480px) {
-            .strategy-switch label, .simulation-mode-switch label {
-                display: block; /* 每個選項獨立一行 */
+            .strategy-switch label {
+                display: block;
                 margin-bottom: 5px;
             }
             .contract-selection {
-                flex-direction: column; /* 超小螢幕時合約選擇也垂直堆疊 */
+                flex-direction: column;
                 gap: 5px;
             }
             .contract-selection label {
-                justify-content: flex-start; /* 左對齊 */
+                justify-content: flex-start;
             }
         }
     </style>
@@ -470,7 +419,6 @@
                         <label for="assumedIndex">假設指數點位 (計算期交稅用):</label>
                         <input  type="text" inputmode="numeric" pattern="[0-9]*" id="assumedIndex" value="27740" min="0" step="100">
                     </div>
-                    <p class="note">*期交稅率以十萬分之2計算，不足一元以一元計收。</p>
                     
                     <div class="sub-group">
                         <div class="sub-group-title">【台指期 (大台) - 每點$200】</div>
@@ -504,7 +452,10 @@
                             <input  type="text" inputmode="numeric" pattern="[0-9]*" id="microComm" value="36" min="0">
                         </div>
                     </div>
-                </div></div><div class="input-block">
+                </div>
+            </div>
+            
+            <div class="input-block">
                 <h3 class="inner-toggle-header collapsed">
                     2. 交易合約選擇 <span class="toggle-icon">▼</span>
                 </h3>
@@ -519,24 +470,25 @@
                         <label>
                             <input type="checkbox" id="selectMicro" checked> 微台
                         </label>
-                        <p class="note">*至少選擇一個合約進行試算。</p>
                     </div>
-                </div></div><div class="input-block">
+                </div>
+            </div>
+            
+            <div class="input-block">
                 <h3 class="inner-toggle-header collapsed">
-                    3. 獲利目標策略 (二選一) <span class="toggle-icon">▼</span>
+                    3. 獲利目標策略 <span class="toggle-icon">▼</span>
                 </h3>
                 <div class="input-content collapsed">
                     <div class="strategy-switch">
                         <label>
-                            <input type="radio" name="strategyMode" value="A" onchange="toggleMode()"> 模式 A: 設定「每盤總目標點數」
+                            <input type="radio" name="strategyMode" value="A" onchange="toggleMode()"> 模式 A: 每盤總目標點數
                         </label>
                         <label>
-                            <input type="radio" name="strategyMode" value="B" checked onchange="toggleMode()"> 模式 B: 設定「單次獲利 x 次數」
+                            <input type="radio" name="strategyMode" value="B" checked onchange="toggleMode()"> 模式 B: 單次獲利 x 次數
                         </label>
                     </div>
 
                     <div id="modeAInputs" class="mode-inputs">
-                        <p class="note">說明：直接設定早盤/夜盤預計達到的總淨點數。系統預設每盤僅進出「1趟」來計算成本。</p>
                         <div class="form-group">
                             <label for="modeA_morningPoints">早盤目標總點數:</label>
                             <input type="number" id="modeA_morningPoints" value="200" min="0">
@@ -548,7 +500,6 @@
                     </div>
 
                     <div id="modeBInputs" class="mode-inputs active">
-                        <p class="note">說明：設定單筆交易獲利點數，以及早/夜盤各交易幾趟。成本會隨交易次數增加。</p>
                         <div class="form-group">
                             <label for="modeB_pointsPerTrade">單次交易目標點數:</label>
                             <input type="number" id="modeB_pointsPerTrade" value="70" min="0">
@@ -562,206 +513,296 @@
                             <input type="number" id="modeB_nightTrades" value="2" min="0">
                         </div>
                     </div>
-                </div></div></div><div class="simulation-mode-switch">
-            <label>
-                <input type="radio" name="simulationMode" value="20days" checked onchange="toggleSimulationMode()"> 20日複利試算
-            </label>
-            <label>
-                <input type="radio" name="simulationMode" value="3days" onchange="toggleSimulationMode()"> 3日損益預估
-            </label>
-            <div id="startDateGroup" class="form-group" style="display: none; margin-top: 15px; background: #f0f4f8; padding: 10px; border-radius: 4px;">
-                <label for="startDate">起始交易日:</label>
-                <input type="date" id="startDate">
+                </div>
+            </div>
+
+            <div class="input-block">
+                <h3 class="inner-toggle-header collapsed">
+                    4. 試算日期設定 <span class="toggle-icon">▼</span>
+                </h3>
+                <div class="input-content collapsed">
+                    <div class="form-group">
+                        <label for="startDate">起始交易日 (D1):</label>
+                        <input type="date" id="startDate">
+                    </div>
+                    <p class="note">*交易日預設為週一至週五，系統將自動跳過週末。</p>
+                    <p class="note">*表格將自動 Highlight 當前時段：<br>07:00 前 -> 前日夜盤<br>14:00 前 -> 當日早盤<br>14:00 後 -> 當日夜盤</p>
+                </div>
             </div>
         </div>
 
         <div class="btn-block">
-            <button id="calculateBtn" onclick="startSimulation()">開始試算</button>
+            <button id="calculateBtn" onclick="startSimulation()">開始 20日複利試算</button>
         </div>
 
         <div id="resultSection">
-            <h2 id="resultTitle">試算結果報告</h2>
+            <h2>試算結果報告</h2>
             <div class="summary-box">
-                <div class="summary-item">初始本金: <span id="summaryInitial"></span></div>
-                <div class="summary-item">20日後本金: <span id="summaryFinal"></span></div>
-                <div class="summary-item">總獲利金額: <span id="summaryProfit"></span></div>
-                <div class="summary-item">總報酬率: <span id="summaryROI"></span></div>
+                <div class="summary-item">
+                    <span class="label">初始本金</span>
+                    <span class="value" id="summaryInitial"></span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">20日後本金</span>
+                    <span class="value" id="summaryFinal"></span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">總獲利金額</span>
+                    <span class="value" id="summaryProfit"></span>
+                </div>
+                <div class="summary-item">
+                    <span class="label">總報酬率</span>
+                    <span class="value" id="summaryROI"></span>
+                </div>
             </div>
 
             <div class="table-responsive">
                 <table id="resultTable">
                     <thead>
                         <tr>
-                            <th id="dayHeader">天數</th>
-                            <th>盤別</th>
+                            <th>日期</th>
                             <th>期初本金</th>
                             <th>最佳建議</th>
                             <th>下單口數</th>
+                            <th>本盤淨利</th>
+                            <th>期末本金</th>
                             <th>目標點數<br>(總計)</th>
                             <th>預估總稅金<br>(買+賣)</th>
                             <th>總手續費<br>(買+賣)</th>
-                            <th>本盤淨利</th>
-                            <th>期末本金</th>
                         </tr>
                     </thead>
                     <tbody>
-                        </tbody>
+                        <!-- JS 動態生成 -->
+                    </tbody>
                 </table>
             </div>
-            <p class="note">*註1：「最佳建議」為系統自動計算當下資金全下您選擇的合約中，何者淨利較高。</p>
-            <p class="note">*註2：期交稅計算方式為「合約價值 * 0.00002」，採無條件進位，買賣雙邊收取。</p>
-            <p class="note">*註3：此試算假設每次交易皆達成目標點數，未考慮虧損風險，僅供策略規劃參考，實際交易請審慎評估。</p>
+            <p class="note">*註1：背景黃色標示為根據當下時間判定之交易時段。</p>
+            <p class="note">*註2：「最佳建議」為系統自動計算當下資金全下您選擇的合約中，何者淨利較高。</p>
+            <p class="note">*註3：您的設定與試算日期已自動儲存，有效期為20天。</p>
         </div>
     </div>
 
     <script>
         // 常數定義
         const TAX_RATE = 0.00002;
-        const BIG_POINT_VALUE = 200; // 大台一點 $200
-        const MINI_POINT_VALUE = 50; // 小台一點 $50
-        const MICRO_POINT_VALUE = 10; // 微台一點 $10
+        const BIG_POINT_VALUE = 200; 
+        const MINI_POINT_VALUE = 50; 
+        const MICRO_POINT_VALUE = 10; 
+        
+        // LocalStorage 常數
+        const STORAGE_KEY = 'futures_calculator_settings_v1';
+        const STORAGE_EXPIRY_DAYS = 20;
 
+        // 數字輸入格式化
         document.querySelectorAll('input[inputmode="numeric"]').forEach(input => {
             input.addEventListener('input', function () {
                 const start = this.selectionStart;
-
-                let raw = this.value.replace(/,/g, '');
-                raw = raw.replace(/\D/g, '');
-
+                let raw = this.value.replace(/,/g, '').replace(/\D/g, '');
                 const formatted = raw.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
                 this.value = formatted;
-
                 const diff = formatted.length - raw.length;
                 this.selectionEnd = start + diff;
             });
         });
 
-        // 初始化日期選擇器為今天，並初始化所有 Toggle 狀態
+        // 初始化
         document.addEventListener('DOMContentLoaded', () => {
             const today = new Date();
             const year = today.getFullYear();
             const month = String(today.getMonth() + 1).padStart(2, '0');
             const day = String(today.getDate()).padStart(2, '0');
-            document.getElementById('startDate').value = `${year}-${month}-${day}`;
             
-            // 初始狀態：預設模式B，所以需要手動呼叫一次toggleMode
+            // 預設日期為今日
+            const defaultDate = `${year}-${month}-${day}`;
+            document.getElementById('startDate').value = defaultDate;
+            
             toggleMode();
-            // 初始狀態：預設20日試算模式
-            toggleSimulationMode(); 
 
-            // 初始化所有內層 toggle 為 collapsed 狀態
+            // 初始化所有 Toggle
             document.querySelectorAll('.input-block h3').forEach(header => {
                 header.classList.add('collapsed');
-                header.nextElementSibling.classList.add('collapsed'); // input-content
+                header.nextElementSibling.classList.add('collapsed');
             });
-            // 外層 toggle 預設也是 collapsed 狀態，已在HTML中設置
+            
+            // 嘗試從 LocalStorage 載入設定
+            const loaded = loadFromLocalStorage();
+            
+            if (loaded) {
+                // 如果成功載入，自動執行一次試算
+                console.log("偵測到有效歷史設定，自動執行試算...");
+                startSimulation();
+                
+                // 自動展開結果區塊 (不需要特別寫，startSimulation 會處理 resultSection.display)
+                // 若希望展開設定區塊讓使用者知道設定被代入，可選：
+                // document.getElementById('outerToggleHeader').click(); 
+            }
         });
 
-        // 外層 Toggle 功能
+        // 外層 Toggle
         document.getElementById('outerToggleHeader').addEventListener('click', function() {
             const outerContent = document.getElementById('outerToggleContent');
             this.classList.toggle('collapsed');
             this.classList.toggle('expanded');
             outerContent.classList.toggle('collapsed');
-            // 如果從 collapsed 變為 expanded，需要重新調整 display 屬性以允許 flex 佈局
             if (!outerContent.classList.contains('collapsed')) {
                 outerContent.style.display = 'flex';
             } else {
-                // 為了讓 transition 執行完畢，可以稍微延遲再設為 none
-                setTimeout(() => {
-                    outerContent.style.display = 'none';
-                }, 500); // 與 transition-duration 保持一致
+                setTimeout(() => { outerContent.style.display = 'none'; }, 500);
             }
         });
 
-// 內層 Toggle 功能 (為每個 input-block 的 h3 綁定事件)
+        // 內層 Toggle
         document.querySelectorAll('.input-block h3').forEach(header => {
             header.addEventListener('click', function() {
-                const content = this.nextElementSibling; // input-content div
+                const content = this.nextElementSibling;
                 this.classList.toggle('collapsed');
                 this.classList.toggle('expanded');
                 content.classList.toggle('collapsed');
             });
         });
 
-        // 切換獲利目標模式 (A或B)
+        // 切換獲利目標模式
         function toggleMode() {
             const mode = document.querySelector('input[name="strategyMode"]:checked').value;
             document.getElementById('modeAInputs').classList.toggle('active', mode === 'A');
             document.getElementById('modeBInputs').classList.toggle('active', mode === 'B');
         }
 
-        // 切換試算模式 (20日複利 vs 3日預估)
-        function toggleSimulationMode() {
-            const simulationMode = document.querySelector('input[name="simulationMode"]:checked').value;
-            const startDateGroup = document.getElementById('startDateGroup');
-            const dayHeader = document.getElementById('dayHeader');
-            const resultTitle = document.getElementById('resultTitle');
-            const summaryFinalItem = document.getElementById('summaryFinal').closest('.summary-item'); // 獲取父級 .summary-item
-            const summaryROIItem = document.getElementById('summaryROI').closest('.summary-item'); // 獲取父級 .summary-item
-            
-            // 更新表格標題
-            document.querySelector('#resultTable thead tr').innerHTML = `
-                <th id="dayHeader">${simulationMode === '3days' ? '日期' : '天數'}</th>
-                <th>盤別</th>
-                <th>期初本金</th>
-                <th>最佳建議</th>
-                <th>下單口數</th>
-                <th>目標點數<br>(總計)</th>
-                <th>預估總稅金<br>(買+賣)</th>
-                <th>總手續費<br>(買+賣)</th>
-                <th>本盤淨利</th>
-                <th>期末本金</th>
-            `;
-
-            if (simulationMode === '3days') {
-                startDateGroup.style.display = 'flex';
-                resultTitle.innerText = '未來3日損益預估';
-                summaryFinalItem.style.display = 'none';
-                summaryROIItem.style.display = 'none';
-            } else {
-                startDateGroup.style.display = 'none';
-                resultTitle.innerText = '試算結果報告';
-                summaryFinalItem.style.display = 'block';
-                summaryROIItem.style.display = 'block';
-            }
-        }
-
-        // 格式化數字為貨幣字串 (例如 123,456)
+        // 格式化數字
         function formatCurrency(num) {
             return new Intl.NumberFormat('zh-TW', { maximumFractionDigits: 0 }).format(num);
         }
         
-        // 計算單邊稅金 (無條件進位 Math.ceil)
+        // 稅金計算
         function calculateSingleSideTax(index, pointValue) {
-            // 稅金 = 指數 * 點值 * 稅率，結果無條件進位
             return Math.ceil(index * pointValue * TAX_RATE);
         }
 
-        // 判斷是否為交易日 (週一到週五)
+        // 交易日判斷 (Mon-Fri)
         function isTradingDay(date) {
-            const dayOfWeek = date.getDay(); // 0 = 星期日, 1 = 星期一, ..., 6 = 星期六
+            const dayOfWeek = date.getDay(); 
             return dayOfWeek >= 1 && dayOfWeek <= 5;
         }
 
-        // 獲取下一個交易日
-        function getNextTradingDay(currentDate) {
-            const nextDay = new Date(currentDate);
-            nextDay.setDate(currentDate.getDate() + 1); // 先加一天
-            while (!isTradingDay(nextDay)) {
-                nextDay.setDate(nextDay.getDate() + 1); // 如果是週末，繼續加一天
+        // 找前一個交易日
+        function getPreviousTradingDay(date) {
+            const prev = new Date(date);
+            prev.setDate(date.getDate() - 1);
+            while (!isTradingDay(prev)) {
+                prev.setDate(prev.getDate() - 1);
             }
-            return nextDay;
+            return prev;
+        }
+
+        // --- LocalStorage 功能 ---
+
+        function saveToLocalStorage() {
+            const settings = {
+                // 文字/數字欄位
+                initialCapital: document.getElementById('initialCapital').value,
+                assumedIndex: document.getElementById('assumedIndex').value,
+                bigMargin: document.getElementById('bigMargin').value,
+                bigComm: document.getElementById('bigComm').value,
+                miniMargin: document.getElementById('miniMargin').value,
+                miniComm: document.getElementById('miniComm').value,
+                microMargin: document.getElementById('microMargin').value,
+                microComm: document.getElementById('microComm').value,
+                startDate: document.getElementById('startDate').value,
+                
+                // 策略輸入欄位
+                modeA_morningPoints: document.getElementById('modeA_morningPoints').value,
+                modeA_nightPoints: document.getElementById('modeA_nightPoints').value,
+                modeB_pointsPerTrade: document.getElementById('modeB_pointsPerTrade').value,
+                modeB_morningTrades: document.getElementById('modeB_morningTrades').value,
+                modeB_nightTrades: document.getElementById('modeB_nightTrades').value,
+
+                // Checkbox 狀態
+                selectBig: document.getElementById('selectBig').checked,
+                selectMini: document.getElementById('selectMini').checked,
+                selectMicro: document.getElementById('selectMicro').checked,
+
+                // Radio Button 狀態 (Strategy Mode)
+                strategyMode: document.querySelector('input[name="strategyMode"]:checked').value
+            };
+
+            const data = {
+                timestamp: Date.now(), // 存入當下時間毫秒數
+                settings: settings
+            };
+
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            console.log("設定已儲存至 LocalStorage");
+        }
+
+        function loadFromLocalStorage() {
+            const rawData = localStorage.getItem(STORAGE_KEY);
+            if (!rawData) return false;
+
+            try {
+                const data = JSON.parse(rawData);
+                const now = Date.now();
+                const diffTime = now - data.timestamp;
+                const diffDays = diffTime / (1000 * 60 * 60 * 24);
+
+                // 檢查是否過期 (20天)
+                if (diffDays > STORAGE_EXPIRY_DAYS) {
+                    console.log("儲存的設定已過期 (超過20天)，清除資料。");
+                    localStorage.removeItem(STORAGE_KEY);
+                    return false;
+                }
+
+                const s = data.settings;
+                
+                // 回填文字/數字欄位
+                if (s.initialCapital) document.getElementById('initialCapital').value = s.initialCapital;
+                if (s.assumedIndex) document.getElementById('assumedIndex').value = s.assumedIndex;
+                if (s.bigMargin) document.getElementById('bigMargin').value = s.bigMargin;
+                if (s.bigComm) document.getElementById('bigComm').value = s.bigComm;
+                if (s.miniMargin) document.getElementById('miniMargin').value = s.miniMargin;
+                if (s.miniComm) document.getElementById('miniComm').value = s.miniComm;
+                if (s.microMargin) document.getElementById('microMargin').value = s.microMargin;
+                if (s.microComm) document.getElementById('microComm').value = s.microComm;
+                if (s.startDate) document.getElementById('startDate').value = s.startDate;
+
+                // 回填策略數值
+                if (s.modeA_morningPoints) document.getElementById('modeA_morningPoints').value = s.modeA_morningPoints;
+                if (s.modeA_nightPoints) document.getElementById('modeA_nightPoints').value = s.modeA_nightPoints;
+                if (s.modeB_pointsPerTrade) document.getElementById('modeB_pointsPerTrade').value = s.modeB_pointsPerTrade;
+                if (s.modeB_morningTrades) document.getElementById('modeB_morningTrades').value = s.modeB_morningTrades;
+                if (s.modeB_nightTrades) document.getElementById('modeB_nightTrades').value = s.modeB_nightTrades;
+
+                // 回填 Checkbox
+                document.getElementById('selectBig').checked = s.selectBig;
+                document.getElementById('selectMini').checked = s.selectMini;
+                document.getElementById('selectMicro').checked = s.selectMicro;
+
+                // 回填 Radio Button 並觸發 UI 更新
+                const radios = document.getElementsByName('strategyMode');
+                for (let i = 0; i < radios.length; i++) {
+                    if (radios[i].value === s.strategyMode) {
+                        radios[i].checked = true;
+                        break;
+                    }
+                }
+                toggleMode(); // 根據載入的 Radio 狀態切換顯示區塊
+
+                return true;
+
+            } catch (e) {
+                console.error("讀取 LocalStorage 失敗:", e);
+                return false;
+            }
         }
 
         // 核心試算函數
         function startSimulation() {
-            // 1. 獲取輸入值
-            const initialCapital = parseFloat(document.getElementById('initialCapital').value) || 0;
-            const assumedIndex = parseFloat(document.getElementById('assumedIndex').value) || 27740; // 預設值已更新
+            // 在執行試算前，先儲存設定
+            saveToLocalStorage();
+
+            // 1. 讀取輸入
+            const initialCapital = parseFloat(document.getElementById('initialCapital').value.replace(/,/g, '')) || 0;
+            const assumedIndex = parseFloat(document.getElementById('assumedIndex').value.replace(/,/g, '')) || 27740;
             
-            // 合約選擇狀態
             const selectBig = document.getElementById('selectBig').checked;
             const selectMini = document.getElementById('selectMini').checked;
             const selectMicro = document.getElementById('selectMicro').checked;
@@ -771,15 +812,12 @@
                 return;
             }
 
-            // 大台參數
-            const bigMargin = parseFloat(document.getElementById('bigMargin').value) || 0;
-            const bigComm = parseFloat(document.getElementById('bigComm').value) || 0;
-            // 小台參數
-            const miniMargin = parseFloat(document.getElementById('miniMargin').value) || 0;
-            const miniComm = parseFloat(document.getElementById('miniComm').value) || 0;
-            // 微台參數
-            const microMargin = parseFloat(document.getElementById('microMargin').value) || 0;
-            const microComm = parseFloat(document.getElementById('microComm').value) || 0;
+            const bigMargin = parseFloat(document.getElementById('bigMargin').value.replace(/,/g, '')) || 0;
+            const bigComm = parseFloat(document.getElementById('bigComm').value.replace(/,/g, '')) || 0;
+            const miniMargin = parseFloat(document.getElementById('miniMargin').value.replace(/,/g, '')) || 0;
+            const miniComm = parseFloat(document.getElementById('miniComm').value.replace(/,/g, '')) || 0;
+            const microMargin = parseFloat(document.getElementById('microMargin').value.replace(/,/g, '')) || 0;
+            const microComm = parseFloat(document.getElementById('microComm').value.replace(/,/g, '')) || 0;
 
             const mode = document.querySelector('input[name="strategyMode"]:checked').value;
             let morningPointsTarget, nightPointsTarget, morningTradesCount, nightTradesCount;
@@ -787,9 +825,9 @@
             if (mode === 'A') {
                 morningPointsTarget = parseFloat(document.getElementById('modeA_morningPoints').value) || 0;
                 nightPointsTarget = parseFloat(document.getElementById('modeA_nightPoints').value) || 0;
-                morningTradesCount = 1; // 模式A預設進出1趟
+                morningTradesCount = 1;
                 nightTradesCount = 1;
-            } else { // 模式B為預設
+            } else {
                 const pointsPerTrade = parseFloat(document.getElementById('modeB_pointsPerTrade').value) || 0;
                 morningTradesCount = parseFloat(document.getElementById('modeB_morningTrades').value) || 0;
                 nightTradesCount = parseFloat(document.getElementById('modeB_nightTrades').value) || 0;
@@ -797,74 +835,86 @@
                 nightPointsTarget = pointsPerTrade * nightTradesCount;
             }
 
-            // 基本驗證
-            if (initialCapital <= 0) {
-                alert("請輸入正確的初始本金數值");
+            const startDateStr = document.getElementById('startDate').value;
+            if (!startDateStr) {
+                alert("請選擇起始交易日期！");
                 return;
             }
-            if ((selectBig && bigMargin <= 0) || (selectMini && miniMargin <= 0) || (selectMicro && microMargin <= 0)) {
-                alert("請檢查所選合約的保證金是否正確輸入 (不能為零)。");
-                return;
+
+            // 2. 設定 Highlight 目標
+            const now = new Date();
+            const currentHour = now.getHours();
+            
+            let highlightDate = null;
+            let highlightSession = '';
+
+            if (currentHour < 7) {
+                highlightSession = '夜盤';
+                highlightDate = getPreviousTradingDay(now);
+            } else if (currentHour < 14) {
+                highlightSession = '早盤';
+                highlightDate = now; 
+            } else {
+                highlightSession = '夜盤';
+                highlightDate = now;
+            }
+
+            function isSameDate(d1, d2) {
+                return d1.getFullYear() === d2.getFullYear() &&
+                       d1.getMonth() === d2.getMonth() &&
+                       d1.getDate() === d2.getDate();
             }
 
             let currentCapital = initialCapital;
             let tableBodyHTML = '';
             
-            const simulationMode = document.querySelector('input[name="simulationMode"]:checked').value;
-            let totalDaysToSimulate = 0;
-            let currentSimulationDate = null;
-            let dayLabels = []; // 用於3日預估顯示日期標籤
-
-            if (simulationMode === '20days') {
-                totalDaysToSimulate = 20;
-            } else { // '3days' mode
-                totalDaysToSimulate = 3;
-                const startDateStr = document.getElementById('startDate').value;
-                if (!startDateStr) {
-                    alert("請選擇起始交易日期！");
-                    return;
-                }
-                currentSimulationDate = new Date(startDateStr + 'T00:00:00'); // 避免時區問題
-                
-                // 找到第一個交易日
-                while (!isTradingDay(currentSimulationDate)) {
-                    currentSimulationDate.setDate(currentSimulationDate.getDate() + 1);
-                }
-
-                // 準備 3 日的日期標籤
-                dayLabels = ['今日', '明日', '後天'];
+            let currentSimulationDate = new Date(startDateStr + 'T00:00:00'); 
+            while (!isTradingDay(currentSimulationDate)) {
+                currentSimulationDate.setDate(currentSimulationDate.getDate() + 1);
             }
 
-            // 2. 執行迴圈 (20 天或 3 交易日)
-            for (let dayCounter = 1; dayCounter <= totalDaysToSimulate; dayCounter++) {
-                let displayDayLabel = '';
-                if (simulationMode === '20days') {
-                    displayDayLabel = `D${dayCounter}`;
-                } else { // '3days' mode
-                    displayDayLabel = `${dayLabels[dayCounter - 1]} (${currentSimulationDate.getMonth() + 1}/${currentSimulationDate.getDate()})`;
-                }
+            // 3. 執行 20 日迴圈
+            for (let dayCounter = 1; dayCounter <= 20; dayCounter++) {
+                
+                const monthStr = String(currentSimulationDate.getMonth() + 1).padStart(2, '0');
+                const dateStr = String(currentSimulationDate.getDate()).padStart(2, '0');
+                const baseDateLabel = `${monthStr}-${dateStr}`;
 
                 // --- 早盤 ---
-                currentCapital = runSessionSimulation(displayDayLabel, '早盤', currentCapital, assumedIndex, 
-                                            selectBig ? { margin: bigMargin, comm: bigComm, pointValue: BIG_POINT_VALUE, name: '大台' } : null,
-                                            selectMini ? { margin: miniMargin, comm: miniComm, pointValue: MINI_POINT_VALUE, name: '小台' } : null,
-                                            selectMicro ? { margin: microMargin, comm: microComm, pointValue: MICRO_POINT_VALUE, name: '微台' } : null,
-                                            morningPointsTarget, morningTradesCount);
+                const isMorningHighlight = isSameDate(currentSimulationDate, highlightDate) && highlightSession === '早盤';
+                currentCapital = runSessionSimulation(
+                    `${baseDateLabel}(早)`, 
+                    '早盤', 
+                    currentCapital, 
+                    assumedIndex, 
+                    selectBig ? { margin: bigMargin, comm: bigComm, pointValue: BIG_POINT_VALUE, name: '大台' } : null,
+                    selectMini ? { margin: miniMargin, comm: miniComm, pointValue: MINI_POINT_VALUE, name: '小台' } : null,
+                    selectMicro ? { margin: microMargin, comm: microComm, pointValue: MICRO_POINT_VALUE, name: '微台' } : null,
+                    morningPointsTarget, morningTradesCount, isMorningHighlight
+                );
                 
                 // --- 夜盤 ---
-                currentCapital = runSessionSimulation(displayDayLabel, '夜盤', currentCapital, assumedIndex, 
-                                            selectBig ? { margin: bigMargin, comm: bigComm, pointValue: BIG_POINT_VALUE, name: '大台' } : null,
-                                            selectMini ? { margin: miniMargin, comm: miniComm, pointValue: MINI_POINT_VALUE, name: '小台' } : null,
-                                            selectMicro ? { margin: microMargin, comm: microComm, pointValue: MICRO_POINT_VALUE, name: '微台' } : null,
-                                            nightPointsTarget, nightTradesCount);
+                const isNightHighlight = isSameDate(currentSimulationDate, highlightDate) && highlightSession === '夜盤';
+                currentCapital = runSessionSimulation(
+                    `${baseDateLabel}(夜)`, 
+                    '夜盤', 
+                    currentCapital, 
+                    assumedIndex, 
+                    selectBig ? { margin: bigMargin, comm: bigComm, pointValue: BIG_POINT_VALUE, name: '大台' } : null,
+                    selectMini ? { margin: miniMargin, comm: miniComm, pointValue: MINI_POINT_VALUE, name: '小台' } : null,
+                    selectMicro ? { margin: microMargin, comm: microComm, pointValue: MICRO_POINT_VALUE, name: '微台' } : null,
+                    nightPointsTarget, nightTradesCount, isNightHighlight
+                );
 
-                // 3日預估模式需要推進到下一個交易日
-                if (simulationMode === '3days' && dayCounter < totalDaysToSimulate) {
-                    currentSimulationDate = getNextTradingDay(currentSimulationDate);
+                const nextDay = new Date(currentSimulationDate);
+                nextDay.setDate(currentSimulationDate.getDate() + 1);
+                while (!isTradingDay(nextDay)) {
+                    nextDay.setDate(nextDay.getDate() + 1);
                 }
+                currentSimulationDate = nextDay;
             }
 
-            // 3. 更新摘要報告
+            // 4. 更新報告
             const totalProfit = currentCapital - initialCapital;
             const roi = (totalProfit / initialCapital) * 100;
 
@@ -873,17 +923,18 @@
             document.getElementById('summaryProfit').innerText = (totalProfit >= 0 ? '+' : '') + '$' + formatCurrency(totalProfit);
             document.getElementById('summaryProfit').style.color = totalProfit >= 0 ? 'var(--success-color)' : 'var(--danger-color)';
             document.getElementById('summaryROI').innerText = roi.toFixed(2) + '%';
+            document.getElementById('summaryROI').style.color = roi >= 0 ? 'var(--success-color)' : 'var(--danger-color)';
 
             document.getElementById('resultTable').getElementsByTagName('tbody')[0].innerHTML = tableBodyHTML;
             document.getElementById('resultSection').style.display = 'block';
 
-            // 輔助函數：執行單一盤別試算並產生表格列 (接收合約物件，而非單獨參數)
-            function runSessionSimulation(dayLabel, sessionName, startCap, index, 
-                                          bigContract, miniContract, microContract, // 傳入合約物件或 null
-                                          targetPoints, tradesCount) {
+            // 試算函數
+            function runSessionSimulation(dateLabel, sessionName, startCap, index, 
+                                          bigContract, miniContract, microContract, 
+                                          targetPoints, tradesCount, isHighlight) {
+                
                 if (targetPoints === 0 || tradesCount === 0) {
-                     // 如果該盤沒有目標，直接回傳原本身金，並產生空資料列
-                     generateTableRow(dayLabel, sessionName, startCap, '-', 0, 0, 0, 0, 0, startCap);
+                     generateTableRow(dateLabel, startCap, '-', 0, 0, 0, 0, 0, startCap, isHighlight);
                      return startCap;
                 }
 
@@ -891,14 +942,13 @@
                 let finalContracts = 0;
                 let finalTax = 0;
                 let finalComm = 0;
-                let finalNetProfit = -Infinity; // 用負無限大確保能選出第一個可下單的
+                let finalNetProfit = -Infinity;
 
                 const contractsToEvaluate = [];
                 if (bigContract) contractsToEvaluate.push(bigContract);
                 if (miniContract) contractsToEvaluate.push(miniContract);
                 if (microContract) contractsToEvaluate.push(microContract);
 
-                // 檢查是否有任何合約可以下單
                 const canTradeAnyContract = contractsToEvaluate.some(c => Math.floor(startCap / c.margin) > 0);
 
                 if (!canTradeAnyContract) {
@@ -907,14 +957,14 @@
                 } else {
                     for (const contract of contractsToEvaluate) {
                         const currentContracts = Math.floor(startCap / contract.margin);
-                        if (currentContracts > 0) { // 只有能下單的合約才進行評估
+                        if (currentContracts > 0) {
                             const grossProfit = currentContracts * targetPoints * contract.pointValue;
                             const totalComm = currentContracts * contract.comm * tradesCount;
                             const singleSideTax = calculateSingleSideTax(index, contract.pointValue);
                             const totalTax = singleSideTax * 2 * currentContracts * tradesCount;
                             const netProfit = grossProfit - totalComm - totalTax;
 
-                            if (netProfit > finalNetProfit) { // 選擇淨利更高的
+                            if (netProfit > finalNetProfit) {
                                 finalNetProfit = netProfit;
                                 bestContractName = contract.name;
                                 finalContracts = currentContracts;
@@ -924,8 +974,6 @@
                         }
                     }
 
-                    // 如果所有選中的合約計算後都導致虧損，則視為放棄交易，淨利為0
-                    // 只有當至少有一個合約可以下單（即 currentContracts > 0）時，才考慮放棄
                     if (finalNetProfit <= 0 && contractsToEvaluate.some(c => Math.floor(startCap / c.margin) > 0)) {
                         bestContractName = '放棄交易(虧損)';
                         finalContracts = 0;
@@ -937,28 +985,28 @@
                 
                 const endCap = startCap + finalNetProfit;
 
-                // 產生表格 HTML
-                generateTableRow(dayLabel, sessionName, startCap, bestContractName, finalContracts, targetPoints, finalTax, finalComm, finalNetProfit, endCap);
+                generateTableRow(dateLabel, startCap, bestContractName, finalContracts, targetPoints, finalTax, finalComm, finalNetProfit, endCap, isHighlight);
 
-                return endCap; // 回傳期末本金供下一盤使用
+                return endCap;
             }
 
-            function generateTableRow(dayLabel, sessionName, startCap, best, contracts, points, tax, comm, netProfit, endCap) {
-                const rowClass = sessionName === '夜盤' ? 'night-session' : '';
+            function generateTableRow(dateLabel, startCap, best, contracts, points, tax, comm, netProfit, endCap, isHighlight) {
                 const profitClass = netProfit > 0 ? 'profit-positive' : (netProfit < 0 ? 'profit-negative' : '');
-                
+                const isNight = dateLabel.includes('(夜)');
+                const rowClass = isNight ? 'night-session' : '';
+                const highlightClass = isHighlight ? 'highlight-row' : '';
+
                 tableBodyHTML += `
-                    <tr class="${rowClass}">
-                        <td>${dayLabel}</td>
-                        <td>${sessionName}</td>
-                        <td>${formatCurrency(startCap)}</td>
+                    <tr class="${rowClass} ${highlightClass}">
+                        <td>${dateLabel}</td>
+                        <td>$${formatCurrency(startCap)}</td>
                         <td class="best-contract">${best}</td>
                         <td>${contracts} 口</td>
+                        <td class="${profitClass}">$${formatCurrency(netProfit)}</td>
+                        <td class="final-capital-cell">$${formatCurrency(endCap)}</td>
                         <td>${points} 點</td>
                         <td>$${formatCurrency(tax)}</td>
                         <td>$${formatCurrency(comm)}</td>
-                        <td class="${profitClass}">$${formatCurrency(netProfit)}</td>
-                        <td class="final-capital-cell">$${formatCurrency(endCap)}</td>
                     </tr>
                 `;
             }
