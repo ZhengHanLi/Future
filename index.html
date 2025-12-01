@@ -621,6 +621,22 @@
         const MINI_POINT_VALUE = 50; // 小台一點 $50
         const MICRO_POINT_VALUE = 10; // 微台一點 $10
 
+        document.querySelectorAll('input[inputmode="numeric"]').forEach(input => {
+            input.addEventListener('input', function () {
+                const start = this.selectionStart;
+
+                let raw = this.value.replace(/,/g, '');
+                raw = raw.replace(/\D/g, '');
+
+                const formatted = raw.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+                this.value = formatted;
+
+                const diff = formatted.length - raw.length;
+                this.selectionEnd = start + diff;
+            });
+        });
+
         // 初始化日期選擇器為今天，並初始化所有 Toggle 狀態
         document.addEventListener('DOMContentLoaded', () => {
             const today = new Date();
