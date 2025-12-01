@@ -388,7 +388,6 @@
                 margin-bottom: 5px;
             }
             .contract-selection {
-                flex-direction: column;
                 gap: 5px;
             }
             .contract-selection label {
@@ -415,7 +414,7 @@
                         <label for="initialCapital">初始本金 (NT$):</label>
                         <input  type="text" inputmode="numeric" pattern="[0-9]*" id="initialCapital" value="56000" min="0" step="1000">
                     </div>
-                    <div class="form-group" style="background: #fff3cd; padding: 5px;">
+                    <div class="form-group">
                         <label for="assumedIndex">假設指數點位 (計算期交稅用):</label>
                         <input  type="text" inputmode="numeric" pattern="[0-9]*" id="assumedIndex" value="27740" min="0" step="100">
                     </div>
@@ -918,9 +917,9 @@
             const totalProfit = currentCapital - initialCapital;
             const roi = (totalProfit / initialCapital) * 100;
 
-            document.getElementById('summaryInitial').innerText = '$' + formatCurrency(initialCapital);
-            document.getElementById('summaryFinal').innerText = '$' + formatCurrency(currentCapital);
-            document.getElementById('summaryProfit').innerText = (totalProfit >= 0 ? '+' : '') + '$' + formatCurrency(totalProfit);
+            document.getElementById('summaryInitial').innerText =  + formatCurrency(initialCapital);
+            document.getElementById('summaryFinal').innerText =  + formatCurrency(currentCapital);
+            document.getElementById('summaryProfit').innerText = (totalProfit >= 0 ? '+' : '') +  + formatCurrency(totalProfit);
             document.getElementById('summaryProfit').style.color = totalProfit >= 0 ? 'var(--success-color)' : 'var(--danger-color)';
             document.getElementById('summaryROI').innerText = roi.toFixed(2) + '%';
             document.getElementById('summaryROI').style.color = roi >= 0 ? 'var(--success-color)' : 'var(--danger-color)';
@@ -999,14 +998,14 @@
                 tableBodyHTML += `
                     <tr class="${rowClass} ${highlightClass}">
                         <td>${dateLabel}</td>
-                        <td>$${formatCurrency(startCap)}</td>
+                        <td>${formatCurrency(startCap)}</td>
                         <td class="best-contract">${best}</td>
                         <td>${contracts} 口</td>
-                        <td class="${profitClass}">$${formatCurrency(netProfit)}</td>
-                        <td class="final-capital-cell">$${formatCurrency(endCap)}</td>
+                        <td class="${profitClass}">${formatCurrency(netProfit)}</td>
+                        <td class="final-capital-cell">${formatCurrency(endCap)}</td>
                         <td>${points} 點</td>
-                        <td>$${formatCurrency(tax)}</td>
-                        <td>$${formatCurrency(comm)}</td>
+                        <td>${formatCurrency(tax)}</td>
+                        <td>${formatCurrency(comm)}</td>
                     </tr>
                 `;
             }
