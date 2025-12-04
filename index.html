@@ -11,8 +11,8 @@
 <body>
 
 <div class="container">
-
-    <h1>台指期複利試算（自選合約、自動最佳化）</h1>
+    <div id="storageExpiryInfo" class="expiry-info"></div>
+    <h1>台指期複利試算</h1>
 
     <!-- 外層設定開關 -->
     <div id="outerToggleHeader" class="outer-toggle-header collapsed">
@@ -220,14 +220,38 @@
                 <thead>
                     <tr>
                         <th>日期</th>
-                        <th>期初本金</th>
-                        <th>最佳建議</th>
-                        <th>下單口數</th>
-                        <th>本盤淨利</th>
-                        <th>期末本金</th>
-                        <th>目標點數</th>
-                        <th>總稅金</th>
-                        <th>總手續費</th>
+                        <th>
+                            <span class="desktop-only">期初本金</span>
+                            <span class="mobile-only">期初<br>本金</span>
+                        </th>
+                        <th>
+                            <span class="desktop-only">最佳建議</span>
+                            <span class="mobile-only">最佳<br>建議</span>
+                        </th>
+                        <th>
+                            <span class="desktop-only">下單口數</span>
+                            <span class="mobile-only">下單<br>口數</span>
+                        </th>
+                        <th>
+                            <span class="desktop-only">本盤淨利</span>
+                            <span class="mobile-only">本盤<br>淨利</span>
+                        </th>
+                        <th>
+                            <span class="desktop-only">期末本金</span>
+                            <span class="mobile-only">期末<br>本金</span>
+                        </th>
+                        <th>
+                            <span class="desktop-only">目標點數</span>
+                            <span class="mobile-only">目標<br>點數</span>
+                        </th>
+                        <th>
+                            <span class="desktop-only">總稅金</span>
+                            <span class="mobile-only">總<br>稅金</span>
+                        </th>
+                        <th>
+                            <span class="desktop-only">手續費</span>
+                            <span class="mobile-only">總手<br>續費</span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody></tbody>

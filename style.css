@@ -23,6 +23,17 @@ body {
     background: #fff;
     border-radius: 12px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+
+    position: relative; /* 使子元素可以 absolute 定位 */
+}
+
+.expiry-info {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 14px;
+    color: #666;
+    white-space: nowrap;
 }
 
 h1 {
@@ -107,7 +118,7 @@ input {
     padding: 12px 14px;
     border: 1px solid var(--border);
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 24px;
     transition: border .2s, box-shadow .2s;
 }
 
@@ -120,12 +131,12 @@ input:focus {
 /* 清除按鈕 */
 .clear-btn {
     position: absolute;
-    right: 8px;
+    right: 0px;
     top: 50%;
     transform: translateY(-50%);
     color: #aaa;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 24px;
 }
 
 /* 子區塊 */
@@ -225,6 +236,10 @@ tr.highlight-row {
 
 .border-strong { border-bottom: 3px solid #666 !important; }
 
+
+.desktop-only { display: inline; }
+.mobile-only { display: none; }
+
 /* RWD */
 @media (max-width: 768px) {
 
@@ -237,4 +252,7 @@ tr.highlight-row {
         margin-bottom: 6px;
         width: 100%;
     }
+
+    .desktop-only { display: none; }
+    .mobile-only { display: block;width: 38px; }
 }

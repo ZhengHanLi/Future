@@ -146,6 +146,7 @@ function saveToLocalStorage() {
 }
 
 function loadFromLocalStorage() {
+    document.getElementById('storageExpiryInfo').innerText = '';
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return false;
     try {
@@ -177,6 +178,20 @@ function loadFromLocalStorage() {
         document.getElementById('selectBig').checked = !!s.selectBig;
         document.getElementById('selectMini').checked = !!s.selectMini;
         document.getElementById('selectMicro').checked = !!s.selectMicro;
+
+        // 顯示 LocalStorage 有效期限 + 剩餘天數
+        const expireDate = new Date(data.timestamp + STORAGE_EXPIRY_DAYS * 86400000);
+        const y = expireDate.getFullYear();
+        const m = String(expireDate.getMonth() + 1).padStart(2, '0');
+        const d = String(expireDate.getDate()).padStart(2, '0');
+
+        // 計算剩餘天數
+        const nowDate = new Date();
+        const msDiff = expireDate - nowDate;
+        const remainDays = Math.ceil(msDiff / (1000 * 60 * 60 * 24));
+
+        document.getElementById('storageExpiryInfo').innerText =
+            `有效期限：${y}/${m}/${d}（剩 ${remainDays} 天）`;
 
         console.log('[LocalStorage] 載入先前設定 (有效)。');
         return true;
@@ -274,7 +289,7 @@ function startSimulation(autoMode = false) {
     for (let dayCounter = 1; dayCounter <= 20; dayCounter++) {
         const monthStr = String(currentSimulationDate.getMonth() + 1).padStart(2, '0');
         const dateStr = String(currentSimulationDate.getDate()).padStart(2, '0');
-        const baseLabel = `${monthStr}-${dateStr}`;
+        const baseLabel = `<span class="desktop-only">${monthStr}-${dateStr}</span><span class="mobile-only">${monthStr}-${dateStr}<br></span>`;
 
         // 早盤
         const isMorningHighlight = isSameDate(currentSimulationDate, highlightDate) && highlightSession === '早盤';
