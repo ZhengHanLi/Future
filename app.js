@@ -512,4 +512,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const el = document.getElementById(id);
         if (el) el.dispatchEvent(new Event('input'));
     });
+
+    const microMarginInput = document.getElementById('microMargin');
+    if (microMarginInput) microMarginInput.addEventListener('blur', () => {
+        const microValue = parseFloat(onlyDigits(document.getElementById('microMargin').value)) || 0;
+        document.getElementById('miniMargin').value = microValue * 5;
+        document.getElementById('bigMargin').value =  microValue * 20;
+
+    });
 });
